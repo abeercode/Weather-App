@@ -1,8 +1,10 @@
 const loc = document.querySelector("#location");
 const submit = document.querySelector("#submit");
 submit.addEventListener("click", async(e) => {
+
     e.preventDefault()
-   await processJSON()
+    const requireData = await processJSON()
+   await displayProcess(requireData)
     
 
 })
@@ -25,14 +27,24 @@ async function processJSON() {
     const address = dataWeather.resolvedAddress 
     const temp = dataWeather.days[0].temp
     const feelsLike =dataWeather.days[0].feelslike
-    const condition = dataWeather.conditions
-    
+    const condition = dataWeather.days[0].conditions
+
     const requireData= {
         "temp": temp,
         "address":address,
         "feelsLike":feelsLike,
         "condition":condition
-    }
-    
+    } 
+    console.log(requireData)
     return requireData
+}
+
+function displayProcess(object){
+
+    for (let key in object){
+        const doc =key.toString();
+        const element = document.querySelector(`#${doc}`);
+        element.textContent =  `${doc}`+   " =  " + object[`${key}`]
+    }
+
 }
